@@ -68,6 +68,7 @@ app.get('/api/blogs', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
 app.get('/api/blogs/:id', async (req, res) => {
     try {
         const blogs = await Blog.findById(req.params.id)
@@ -78,8 +79,9 @@ app.get('/api/blogs/:id', async (req, res) => {
 });
 
 app.put('/api/blogs/:id', async (req, res) => {
+    const { title, content } = req.body;
     try {
-        const blog = await Blog.findByIdAndUpdate(req.params.id)
+        const blog = await Blog.findByIdAndUpdate(req.params.id, { title, content }, { new: true, runValidators: true })
         res.json(blog);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -87,6 +89,7 @@ app.put('/api/blogs/:id', async (req, res) => {
 })
 
 app.delete('/api/blogs/:id', async (req, res) => {
+
     try {
         const blog = await Blog.findByIdAndDelete(req.params.id)
         res.json(blog);
