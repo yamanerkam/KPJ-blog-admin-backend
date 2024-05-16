@@ -68,7 +68,23 @@ app.get('/api/blogs', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+app.get('/api/blogs/:id', async (req, res) => {
+    try {
+        const blogs = await Blog.findById(req.params.id)
+        res.json(blogs);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
+app.put('/api/blogs/:id', async (req, res) => {
+    try {
+        const blog = await Blog.findByIdAndUpdate(req.params.id)
+        res.json(blog);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
