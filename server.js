@@ -86,6 +86,15 @@ app.put('/api/blogs/:id', async (req, res) => {
     }
 })
 
+app.delete('/api/blogs/:id', async (req, res) => {
+    try {
+        const blog = await Blog.findByIdAndDelete(req.params.id)
+        res.json(blog);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
